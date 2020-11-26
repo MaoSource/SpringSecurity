@@ -48,6 +48,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()   //出了/user/**,其他的可以访问
                 .and()
                 .formLogin()
-                .successForwardUrl("/login-success");   //自定义登录成功地址
+                .loginPage("/login")    //添加自定义登录页面
+                .successForwardUrl("/login-success")   //自定义登录成功地址
+        .and()
+                .csrf().disable();  //关闭跨载的功能
     }
 }
