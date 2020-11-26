@@ -17,4 +17,8 @@ public class loginInfo {
     public String loginSuccess(){
         return "/index";
     }
+    @RequestMapping("/403")
+    public String error(){
+        return "/403";
+    }
 }
