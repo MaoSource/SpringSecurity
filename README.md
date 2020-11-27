@@ -205,3 +205,10 @@ public class ErrorPageConfig implements ErrorPageRegistrar {
         .and()
                 .csrf().disable();  //关闭跨载的功能
 ```
+
+##### 添加图形验证码
+
+之前有特意写到，详细请查看[Security添加图形验证码](https://asource.top/archives/security%E6%B7%BB%E5%8A%A0%E9%AA%8C%E8%AF%81%E7%A0%81%E6%A0%A1%E9%AA%8C)
+
+
+### 项目下载地址：[点击下载](https://github.com/MaoSource/SpringSecurity/tree/master)
