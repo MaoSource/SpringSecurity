@@ -2,6 +2,7 @@ package com.source;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description:
  */
 @SpringBootApplication
+@MapperScan("com.source.dao")
 public class boot {
     public static void main(String[] args) {
         SpringApplication.run(boot.class);

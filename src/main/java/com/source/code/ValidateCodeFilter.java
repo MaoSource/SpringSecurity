@@ -32,7 +32,6 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        System.out.println(httpServletRequest.getRequestURI());
         // 判断当前是否是登录请求
         if (StringUtils.equalsIgnoreCase("/login", httpServletRequest.getRequestURI())
                 && StringUtils.equalsIgnoreCase(httpServletRequest.getMethod(), "post")) {

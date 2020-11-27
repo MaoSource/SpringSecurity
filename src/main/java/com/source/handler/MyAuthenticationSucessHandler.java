@@ -1,6 +1,9 @@
 package com.source.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.source.bean.User;
+import com.source.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +20,9 @@ import java.util.Map;
 @Component
 public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired
+    private UserService userService;
+
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
@@ -28,7 +34,8 @@ public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandl
             if (principal instanceof UserDetails){
                 UserDetails userDetails = (UserDetails)principal;
                 String username = userDetails.getUsername();
-                map.put("username",username);
+                User user = userService.selectByName(username);
+                map.put("User",user);
             }
         }
 
