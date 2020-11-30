@@ -11,6 +11,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,6 +36,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private MyAuthenticationFailureHandler authenticationFailureHandler;
 
+    //注入DataSource,需在配置中配置持久层
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private MyUserDetailsService userDetailsService;
 
     //    自定义用户信息
 //    @Override
@@ -53,6 +63,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * 注册remember-me接口
+     * @return
+     */
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        // createTableOnStartup属性用于是否启动项目时创建保存token信息的数据表，这里设置为false，我们自己手动创建,首次可以选择true自动创建。
+        jdbcTokenRepository.setCreateTableOnStartup(false);
+        return jdbcTokenRepository;
+    }
+
 
     // 该方法的作用就是代替之前的：<security:http>
     @Override
@@ -63,6 +86,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successForwardUrl("/login-success")   //自定义登录成功地址
                 .successHandler(authenticationSucessHandler) // 处理登录成功
                 .failureHandler(authenticationFailureHandler) // 处理登录失败
+                .and()
+                .rememberMe()
+                .tokenRepository(persistentTokenRepository()) // 配置 token 持久化仓库
+                .tokenValiditySeconds(3600) // remember 过期时间，单为秒
+                .userDetailsService(userDetailsService) // 处理自动登录逻辑
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/add").hasAnyAuthority("ROLE_ADD","ROLE_ALL")
