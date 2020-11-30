@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Table(name = "sys_user")
-public class User implements UserDetails{
+public class MyUser implements UserDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

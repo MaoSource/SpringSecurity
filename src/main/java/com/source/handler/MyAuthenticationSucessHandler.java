@@ -1,7 +1,7 @@
 package com.source.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.source.bean.User;
+import com.source.bean.MyUser;
 import com.source.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -34,7 +34,7 @@ public class MyAuthenticationSucessHandler implements AuthenticationSuccessHandl
             if (principal instanceof UserDetails){
                 UserDetails userDetails = (UserDetails)principal;
                 String username = userDetails.getUsername();
-                User user = userService.selectByName(username);
+                MyUser user = userService.findUsername(username);
                 map.put("User",user);
             }
         }

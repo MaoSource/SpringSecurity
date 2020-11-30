@@ -1,6 +1,6 @@
 package com.source.service;
 
-import com.source.bean.User;
+import com.source.bean.MyUser;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    List<User> findAll();
+    List<MyUser> findAll();
 
-    User selectByName(String username);
+    MyUser findUsername(String username);
 }

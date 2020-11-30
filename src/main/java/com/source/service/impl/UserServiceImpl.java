@@ -1,6 +1,6 @@
 package com.source.service.impl;
 
-import com.source.bean.User;
+import com.source.bean.MyUser;
 import com.source.dao.UserMapper;
 import com.source.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,14 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public List<User> findAll() {
-        List<User> users = userMapper.selectAll();
+    public List<MyUser> findAll() {
+        List<MyUser> users = userMapper.selectAll();
         return users;
     }
 
     @Override
-    public User selectByName(String username) {
-        User user = new User();
-        user.setUsername(username);
-        User userInfo = userMapper.selectOne(user);
-        return userInfo;
+    public MyUser findUsername(String username) {
+        MyUser byUserName = userMapper.findByUserName(username);
+        return byUserName;
     }
 }
