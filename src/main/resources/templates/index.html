@@ -1,13 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 </head>
 <body>
-    <a href="/user/add">添加</a>
-    <a href="/user/delete">删除</a>
-    <a href="/user/update">修改</a>
-    <a href="/user/list">查询</a>
+    <ul style="margin: 50px auto; width: 500px" class="list-inline">
+<!--        如果未登录-->
+        <li>
+            <!--未登录-->
+            <div sec:authorize="!isAuthenticated()">
+                <a class="item" th:href="@{/login}">
+                    <i class="address card icon"></i> 登录
+                </a>
+            </div>
+        </li>
+        <li>
+            <!--已登录   显示用户名和注销-->
+            <div sec:authorize="isAuthenticated()">
+                <a class="item">
+                    用户名:<span sec:authentication="name"></span>
+                    角色:<span sec:authentication="principal.authorities"></span>
+                </a>
+                <a class="item" th:href="@{/logout}">
+                    <i class="sign- out icon"></i> 注销
+                </a>
+            </div>
+        </li>
+<!--        已登录-->
+        <li sec:authorize="hasRole('ROLE_ADD')"><a href="/user/add">添加</a></li>
+        <li sec:authorize="hasRole('ROLE_DELETE')"><a href="/user/delete">删除</a></li>
+        <li sec:authorize="hasRole('ROLE_UPDATE')"><a href="/user/update">修改</a></li>
+        <li sec:authorize="hasRole('ROLE_LIST')"><a href="/user/list">查询</a></li>
+    </ul>
 </body>
 </html>

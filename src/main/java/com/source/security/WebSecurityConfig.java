@@ -94,13 +94,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/user/add").hasAnyAuthority("ROLE_ADD","ROLE_ALL")
-                .antMatchers("/user/delete").hasAnyAuthority("ROLE_ADD","ROLE_ALL")
+                .antMatchers("/user/delete").hasAnyAuthority("ROLE_DELETE","ROLE_ALL")
                 .antMatchers("/user/update").hasAnyAuthority("ROLE_UPDATE","ROLE_ALL")
                 .antMatchers("/user/list").hasAnyAuthority("ROLE_LIST","ROLE_ALL")
                 .antMatchers("/user/**").hasAnyAuthority()  //所有/user/**的请求必须通过验证
-                .antMatchers("/js/**").permitAll()
                 .anyRequest().permitAll()   //除了/user/**,其他的可以访问
         .and()
-                .csrf().disable();  //关闭跨载的功能
+                .csrf().disable()  //关闭跨载的功能
+        .logout()  //开启注销
+        .logoutSuccessUrl("/index");    //注销成功后跳转地址
     }
 }

@@ -35,6 +35,11 @@ public class loginInfo {
         return "/login";
     }
 
+    @RequestMapping("/index")
+    public String index(){
+        return "/index";
+    }
+
     @RequestMapping("/login-success")
     public String loginSuccess(){
         return "/index";
